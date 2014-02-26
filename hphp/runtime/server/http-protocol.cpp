@@ -631,7 +631,9 @@ void HttpProtocol::CopyPathInfo(Variant& server,
   default:
     server.set(s_REQUEST_METHOD, empty_string); break;
   }
-  server.set(s_HTTPS, transport->isSSL() ? s_on : empty_string);
+  if (transport->isSSL()) {
+    server.set(s_HTTPS, s_on);
+  }
   server.set(s_QUERY_STRING, r.queryString());
 
   server.set(s_argv, make_packed_array(r.queryString()));
